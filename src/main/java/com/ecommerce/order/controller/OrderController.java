@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.order.interfaces.OrderService;
 import com.ecommerce.order.model.OrderRequest;
+import com.ecommerce.order.model.OrderResponse;
 
 
 @RestController
@@ -32,8 +33,12 @@ public class OrderController {
 		Long orderId =  orderService.placeOrder(orderReq);
 		return new ResponseEntity<>(orderId,HttpStatus.CREATED);
 	}
-	@GetMapping("/{id}")
-	public void getOrderById(@PathVariable Long orderId) {
-		orderService.getOrderDetails(orderId);
+	@GetMapping("/{orderId}")
+	public OrderResponse getOrderById(@PathVariable Long orderId) {
+		return orderService.getOrderDetails(orderId);
+	}
+	@GetMapping("/all")
+	public OrderResponse getOrders() {
+		return orderService.getOrderDetails(null);
 	}
 }
